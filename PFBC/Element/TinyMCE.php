@@ -36,8 +36,8 @@ JS;
 });	
 JS;
 	
-		$ajax = $this->_form->getAjax();
-		$id = $this->_form->getID();
+		$ajax = $this->form->getAjax();
+		$id = $this->form->getID();
 		if(!empty($ajax)) {
 			echo <<<JS
 	jQuery("#$id").bind("submit", function() {
@@ -49,7 +49,7 @@ JS;
 
 	function getJSFiles() {
 		return array(
-			$this->_form->getResourcesPath() . "/tiny_mce/tiny_mce.js"
+			$this->form->getResourcesPath() . "/tiny_mce/tiny_mce.js"
 		);
 	}
 }	

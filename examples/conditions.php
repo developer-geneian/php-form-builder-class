@@ -53,8 +53,8 @@ $form->render();
 
 echo '<pre>', highlight_string('<?php
 $options = array("Option #1", "Option #2", "Option #3");
-$form = new PFBC\Form("elements", 400);
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
+$form = new PFBC\Form("conditions", 400);
+$form->addElement(new PFBC\Element\Hidden("form", "conditions"));
 $form->addElement(new PFBC\Element\YesNo("Show / Hide Condition:", "Condition", array(
 	"description" => "Click \"Yes\" below to show additional form elements.  Click \"No\" to hide them. ", 
 	"onclick" => "toggleAdditionalElements(this.value);"
@@ -78,6 +78,4 @@ $form->render();
 ', true), '</pre>';
 
 include("../footer.php");
-
-echo '<pre>', print_r($_SESSION, true), '</pre>';
 ?>

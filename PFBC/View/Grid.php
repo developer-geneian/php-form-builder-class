@@ -2,8 +2,9 @@
 namespace PFBC\View;
 
 class Grid extends \PFBC\View {
-	protected $_gridIncludedElements = 0;
+	private $gridIncludedElements = 0;
 
+	protected $form;
 	protected $grid;
 	protected $gridMargin = 2;
 
@@ -17,7 +18,7 @@ class Grid extends \PFBC\View {
 	}
 
 	public function jQueryDocumentReady() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 		/*jQuery is used to remove margin from the elements on the far left/right of each row and apply css 
 		entries to the last row.*/
 		echo <<<JS
@@ -34,10 +35,10 @@ JS;
 	}	
 
 	public function render() {
-		echo '<form', $this->_form->getAttributes(), '>';
-		$this->_form->getError()->render();
+		echo '<form', $this->form->getAttributes(), '>';
+		$this->form->getError()->render();
 
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 
 		$gridElementCount = 0;
 		$gridIndex = 0;
@@ -71,7 +72,7 @@ JS;
 				$element->render();
 				echo '</div>';
 
-				if(!empty($this->grid[$gridIndex]) && ($gridElementCount + 1) == $this->_gridIncludedElements)
+				if(!empty($this->grid[$gridIndex]) && ($gridElementCount + 1) == $this->gridIncludedElements)
 					echo '</div>';
 				elseif(!empty($this->grid[$gridIndex])) {
 					if(($gridCount + 1) == $this->grid[$gridIndex]) {
@@ -93,9 +94,9 @@ JS;
     }
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
-		$width = $this->_form->getWidth();
-		$widthSuffix = $this->_form->getWidthSuffix();
+		$id = $this->form->getId();
+		$width = $this->form->getWidth();
+		$widthSuffix = $this->form->getWidthSuffix();
 
 		parent::renderCSS();
 		echo <<<CSS
@@ -109,21 +110,21 @@ JS;
 #$id .pfbc-grid .pfbc-element { margin-right: {$this->gridMargin}$widthSuffix; margin-left: {$this->gridMargin}$widthSuffix; }
 CSS;
 	
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$gridElements = array();
 		foreach($elements as $element) {
 			/*Hidden, HTMLExternal, and Button element classes aren't included in the grid.*/
 			if(!$element instanceof \PFBC\Element\Hidden && !$element instanceof \PFBC\Element\HTMLExternal && !$element instanceof \PFBC\Element\Button) {
-				++$this->_gridIncludedElements;
+				++$this->gridIncludedElements;
 				$gridElements[] = $element;
 			}	
 		}
 
 		/*If the grid array contains more elements than the form has available, it is revised.*/
-		if(array_sum($this->grid) > $this->_gridIncludedElements) {
+		if(array_sum($this->grid) > $this->gridIncludedElements) {
 			$gridRevised = array();
 			foreach($this->grid as $grid) {
-				$gridRemaining = $this->_gridIncludedElements - array_sum($gridRevised);
+				$gridRemaining = $this->gridIncludedElements - array_sum($gridRevised);
 				if(!empty($gridRemaining))
 					if($gridRemaining >= $grid)
 						$gridRevised[] = $grid;

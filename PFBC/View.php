@@ -2,7 +2,7 @@
 namespace PFBC;
 
 abstract class View extends Base {
-	protected $_form;
+	protected $form;
 
 	public function __construct(array $properties = null) {
 		$this->configure($properties);
@@ -27,22 +27,22 @@ abstract class View extends Base {
         }
     }
 
-	public function _setForm(Form $form) {
-		$this->_form = $form;
+	public function setForm(Form $form) {
+		$this->form = $form;
 	}
 
 	/*jQuery is used to apply css entries to the last element.*/
 	public function jQueryDocumentReady() {
-		echo 'jQuery("#', $this->_form->getId(), ' .pfbc-element:last").css({ "margin-bottom": "0", "padding-bottom": "0", "border-bottom": "none" });';
+		echo 'jQuery("#', $this->form->getId(), ' .pfbc-element:last").css({ "margin-bottom": "0", "padding-bottom": "0", "border-bottom": "none" });';
 	}	
 
 	public function render() {}
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 
 		/*For ease-of-use, default styles are applied to form elements.*/
-		if(!in_array("style", $this->_form->getPrevent())) {
+		if(!in_array("style", $this->form->getPrevent())) {
 			echo <<<CSS
 #$id .pfbc-label label { font-weight: bold; }
 #$id .pfbc-label em { font-size: .9em; color: #888; }

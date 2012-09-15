@@ -3,10 +3,10 @@ namespace PFBC\View;
 
 class Standard extends \PFBC\View {
 	public function render() {
-		echo '<form', $this->_form->getAttributes(), '>';
-		$this->_form->getError()->render();
+		echo '<form', $this->form->getAttributes(), '>';
+		$this->form->getError()->render();
 
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$elementSize = sizeof($elements);
 		$elementCount = 0;
 		for($e = 0; $e < $elementSize; ++$e) {
@@ -34,9 +34,9 @@ class Standard extends \PFBC\View {
     }
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
-		$width = $this->_form->getWidth();
-		$widthSuffix = $this->_form->getWidthSuffix();
+		$id = $this->form->getId();
+		$width = $this->form->getWidth();
+		$widthSuffix = $this->form->getWidthSuffix();
 
 		parent::renderCSS();
 		echo <<<CSS
@@ -48,7 +48,7 @@ class Standard extends \PFBC\View {
 #$id .pfbc-buttons { text-align: right; }
 CSS;
 		
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$elementSize = sizeof($elements);
 		$elementCount = 0;
 		for($e = 0; $e < $elementSize; ++$e) {
