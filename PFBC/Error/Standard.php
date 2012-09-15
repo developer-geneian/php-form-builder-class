@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Error;
-
-class Standard extends \PFBC\Error {
+class Error_Standard extends Error {
 	public function applyAjaxErrorResponse() {
 		$id = $this->form->getId();
 		echo <<<JS

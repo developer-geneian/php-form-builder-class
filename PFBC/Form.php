@@ -1,14 +1,12 @@
 <?php
-namespace PFBC;
-
 /*This project's namespace structure is leveraged to autoload requested classes at runtime.*/
-function Load($class) {
-	$file = __DIR__ . "/../" . str_replace("\\", DIRECTORY_SEPARATOR, $class) . ".php";
+function PFBC_Load($class) {
+	$file = dirname(__FILE__) . "/" . str_replace("_", DIRECTORY_SEPARATOR, $class) . ".php";
 	if(is_file($file))
 		include_once $file;
 }
-spl_autoload_register("PFBC\Load");
-if(in_array("__autoload", spl_autoload_functions()))
+spl_autoload_register("PFBC_Load");
+if(in_array("__autoload",spl_autoload_functions()))
 	spl_autoload_register("__autoload");
 
 class Form extends Base {
@@ -40,17 +38,17 @@ class Form extends Base {
 		/*The Standard view class is applied by default and will be used unless a different view is
 		specified in the form's configure method*/
 		if(empty($this->view))
-			$this->view = new View\SideBySide;
+			$this->view = new View_SideBySide;
 
 		if(empty($this->error))
-			$this->error = new Error\Standard;
+			$this->error = new Error_Standard;
 		
 		/*The resourcesPath property is used to identify where third-party resources needed by the
 		project are located.  This property will automatically be set properly if the PFBC directory
 		is uploaded within the server's document root.  If symbolic links are used to reference the PFBC
 		directory, you may need to set this property in the form's configure method or directly in this
 		constructor.*/
-		$path = __DIR__ . "/Resources";
+		$path = dirname(__FILE__) . "/Resources";
 		if(strpos($path, $_SERVER["DOCUMENT_ROOT"]) !== false)
 			$this->resourcesPath = substr($path, strlen($_SERVER["DOCUMENT_ROOT"]));
 		else
@@ -74,7 +72,7 @@ class Form extends Base {
 
 		/*For ease-of-use, the form tag's encytype attribute is automatically set if the File element
 		class is added.*/
-		if($element instanceof Element\File)
+		if($element instanceof Element_File)
 			$this->attributes["enctype"] = "multipart/form-data";
     }
 
@@ -173,7 +171,7 @@ class Form extends Base {
 
 					/*The File element must be handled differently b/c it uses the $_FILES superglobal and
 					not $_GET or $_POST.*/
-					if($element instanceof Element\File)
+					if($element instanceof Element_File)
 						$data[$name] = $_FILES[$name]["name"];
 
 					if(isset($data[$name])) {

@@ -1,6 +1,4 @@
 <?php
-namespace PFBC;
-
 abstract class Base {
 	public function configure(array $properties = null) {
         if(!empty($properties)) {

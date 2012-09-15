@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Sort extends \PFBC\OptionElement {
+class Element_Sort extends OptionElement {
     protected $jQueryOptions;
 
 	public function getCSSFiles() {

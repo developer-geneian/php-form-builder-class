@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 include("../PFBC/Form.php");
 
 if(isset($_POST["form"])) {
-	PFBC\Form::isValid($_POST["form"]);
+	Form::isValid($_POST["form"]);
 	header("Location: " . $_SERVER["PHP_SELF"]);
 	exit();	
 }
@@ -21,121 +21,121 @@ CSS, and Javascript for the browser to display. There are four views provided in
 download: SideBySide, Vertical, Inline and Search.</p>
 
 <?php
-$form = new PFBC\Form("sidebyside");
+$form = new Form("sidebyside");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery")
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "sidebyside"));
-$form->addElement(new PFBC\Element\HTML('<legend>SideBySide <small>default</small></legend>'));
-$form->addElement(new PFBC\Element\Email("Email Address:", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password:", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form->addElement(new Element_Hidden("form", "sidebyside"));
+$form->addElement(new Element_HTML('<legend>SideBySide <small>default</small></legend>'));
+$form->addElement(new Element_Email("Email Address:", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password:", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();
 
 echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("sidebyside");
+$form = new Form("sidebyside");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery")
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "sidebyside"));
-$form->addElement(new PFBC\Element\HTML(\'<legend>SideBySide <small>default</small></legend>\'));
-$form->addElement(new PFBC\Element\Email("Email Address:", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password:", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form->addElement(new Element_Hidden("form", "sidebyside"));
+$form->addElement(new Element_HTML(\'<legend>SideBySide <small>default</small></legend>\'));
+$form->addElement(new Element_Email("Email Address:", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password:", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();
 ?>', true), '</pre>';
 
-$form = new PFBC\Form("vertical");
+$form = new Form("vertical");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Vertical,
+	"view" => new View_Vertical,
 	"labelToPlaceholder" => 1
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "vertical"));
-$form->addElement(new PFBC\Element\HTML('<legend>Vertical</legend>'));
-$form->addElement(new PFBC\Element\Textbox("Subject", "Subject"));
-$form->addElement(new PFBC\Element\Textarea("Comment", "Comment", array("class" => "span6")));
-$form->addElement(new PFBC\Element\Button("Post Comment"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form->addElement(new Element_Hidden("form", "vertical"));
+$form->addElement(new Element_HTML('<legend>Vertical</legend>'));
+$form->addElement(new Element_Textbox("Subject", "Subject"));
+$form->addElement(new Element_Textarea("Comment", "Comment", array("class" => "span6")));
+$form->addElement(new Element_Button("Post Comment"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();
 
 echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("vertical");
+$form = new Form("vertical");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Vertical,
+	"view" => new View_Vertical,
 	"labelToPlaceholder" => 1
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "vertical"));
-$form->addElement(new PFBC\Element\HTML(\'<legend>Vertical</legend>\'));
-$form->addElement(new PFBC\Element\Textbox("Subject", "Subject"));
-$form->addElement(new PFBC\Element\Textarea("Comment", "Comment", array("class" => "span6")));
-$form->addElement(new PFBC\Element\Button("Post Comment"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form->addElement(new Element_Hidden("form", "vertical"));
+$form->addElement(new Element_HTML(\'<legend>Vertical</legend>\'));
+$form->addElement(new Element_Textbox("Subject", "Subject"));
+$form->addElement(new Element_Textarea("Comment", "Comment", array("class" => "span6")));
+$form->addElement(new Element_Button("Post Comment"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();
 ?>', true), '</pre>';
 
-$form = new PFBC\Form("inline");
+$form = new Form("inline");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Inline,
+	"view" => new View_Inline,
 	"labelToPlaceholder" => 1
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "inline"));
-$form->addElement(new PFBC\Element\HTML('<legend>Inline</legend>'));
-$form->addElement(new PFBC\Element\Email("Email Address", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
+$form->addElement(new Element_Hidden("form", "inline"));
+$form->addElement(new Element_HTML('<legend>Inline</legend>'));
+$form->addElement(new Element_Email("Email Address", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
 $form->render();
 
 echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("inline");
+$form = new Form("inline");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Inline,
+	"view" => new View_Inline,
 	"labelToPlaceholder" => 1
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "inline"));
-$form->addElement(new PFBC\Element\HTML(\'<legend>Inline</legend>\'));
-$form->addElement(new PFBC\Element\Email("Email Address", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
+$form->addElement(new Element_Hidden("form", "inline"));
+$form->addElement(new Element_HTML(\'<legend>Inline</legend>\'));
+$form->addElement(new Element_Email("Email Address", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
 $form->render();
 ?>', true), '</pre>';
 
-$form = new PFBC\Form("search");
+$form = new Form("search");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Search
+	"view" => new View_Search
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "search"));
-$form->addElement(new PFBC\Element\HTML('<legend>Search</legend>'));
-$form->addElement(new PFBC\Element\Search("", "Search", array("placeholder" => "Search", "append" => '<button class="btn btn-primary">Go</button>')));
+$form->addElement(new Element_Hidden("form", "search"));
+$form->addElement(new Element_HTML('<legend>Search</legend>'));
+$form->addElement(new Element_Search("", "Search", array("placeholder" => "Search", "append" => '<button class="btn btn-primary">Go</button>')));
 $form->render();
 
 echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("search");
+$form = new Form("search");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus"),
-	"view" => new PFBC\View\Search
+	"view" => new View_Search
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "search"));
-$form->addElement(new PFBC\Element\HTML(\'<legend>Search</legend>\'));
-$form->addElement(new PFBC\Element\Search("", "Search", array("placeholder" => "Search", "append" => \'<button class="btn btn-primary">Go</button>\')));
+$form->addElement(new Element_Hidden("form", "search"));
+$form->addElement(new Element_HTML(\'<legend>Search</legend>\'));
+$form->addElement(new Element_Search("", "Search", array("placeholder" => "Search", "append" => \'<button class="btn btn-primary">Go</button>\')));
 $form->render();
 ?>', true), '</pre>';
 

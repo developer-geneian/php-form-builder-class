@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class jQueryUIDate extends Textbox {
+class Element_jQueryUIDate extends Element_Textbox {
     protected $jQueryOptions;
 
 	public function getCSSFiles() {
@@ -22,7 +20,7 @@ class jQueryUIDate extends Textbox {
     }
 
     public function render() {
-        $this->validation[] = new \PFBC\Validation\Date;
+        $this->validation[] = new Validation_Date;
         parent::render();
     }
 }

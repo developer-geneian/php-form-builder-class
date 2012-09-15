@@ -15,6 +15,7 @@ include("header.php");
 <div class="hero-unit">
 	<h1>PHP Form Builder Class</h1>
 	<p>This project promotes rapid development of HTML forms through an object-oriented PHP framework.</p>
+
 	<p><a href="http://code.google.com/p/php-form-builder-class/downloads/list" class="btn btn-primary btn-large"><i class="icon-download icon-white"></i> Download PFBC 3.0</a></p>
 </div>
 
@@ -61,30 +62,30 @@ echo '<pre>', highlight_string('<?php
 session_start();
 include($_SERVER["DOCUMENT_ROOT"] . "/PFBC/Form.php");
 
-$form = new PFBC\Form("login");
-$form->addElement(new PFBC\Element\HTML(\'<legend>Login</legend>\'));
-$form->addElement(new PFBC\Element\Hidden("form", "login"));
-$form->addElement(new PFBC\Element\Email("Email Address:", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password:", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form = new Form("login");
+$form->addElement(new Element_HTML(\'<legend>Login</legend>\'));
+$form->addElement(new Element_Hidden("form", "login"));
+$form->addElement(new Element_Email("Email Address:", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password:", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();
 ?>', true), '</pre>';
 
-$form = new PFBC\Form("login");
+$form = new Form("login");
 $form->configure(array(
 	"prevent" => array("bootstrap", "jQuery", "focus")
 ));
-$form->addElement(new PFBC\Element\HTML('<legend>Login</legend>'));
-$form->addElement(new PFBC\Element\Hidden("form", "login"));
-$form->addElement(new PFBC\Element\Email("Email Address:", "Email", array("required" => 1)));
-$form->addElement(new PFBC\Element\Password("Password:", "Password", array("required" => 1)));
-$form->addElement(new PFBC\Element\Checkbox("", "Remember", array("1" => "Remember me")));
-$form->addElement(new PFBC\Element\Button("Login"));
-$form->addElement(new PFBC\Element\Button("Cancel", "button", array(
+$form->addElement(new Element_HTML('<legend>Login</legend>'));
+$form->addElement(new Element_Hidden("form", "login"));
+$form->addElement(new Element_Email("Email Address:", "Email", array("required" => 1)));
+$form->addElement(new Element_Password("Password:", "Password", array("required" => 1)));
+$form->addElement(new Element_Checkbox("", "Remember", array("1" => "Remember me")));
+$form->addElement(new Element_Button("Login"));
+$form->addElement(new Element_Button("Cancel", "button", array(
 	"onclick" => "history.go(-1);"
 )));
 $form->render();

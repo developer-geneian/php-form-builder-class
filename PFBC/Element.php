@@ -1,6 +1,4 @@
 <?php
-namespace PFBC;
-
 abstract class Element extends Base {
 	private $errors = array();
 
@@ -69,7 +67,7 @@ abstract class Element extends Base {
 	public function isRequired() {
 		if(!empty($this->validation)) {
 			foreach($this->validation as $validation) {
-				if($validation instanceof Validation\Required)
+				if($validation instanceof Validation_Required)
 					return true;
 			}
 		}
@@ -176,7 +174,7 @@ abstract class Element extends Base {
 	/*This method provides a shortcut for applying the Required validation class to an element.*/
 	public function setRequired($required) {
 		if(!empty($required))
-			$this->validation[] = new Validation\Required;
+			$this->validation[] = new Validation_Required;
 		$this->attributes["required"] = "";	
 	}
 
@@ -190,7 +188,7 @@ abstract class Element extends Base {
 			/*Ensures $object contains a existing concrete validation class.*/
 			if($object instanceof Validation) {
 				$this->validation[] = $object;
-				if($object instanceof Validation\Required)
+				if($object instanceof Validation_Required)
 					$this->attributes["required"] = "";	
 			}	
 		}	

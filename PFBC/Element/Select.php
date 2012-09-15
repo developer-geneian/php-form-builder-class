@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Select extends \PFBC\OptionElement {
+class Element_Select extends OptionElement {
 	protected $attributes = array();
 
 	public function render() { 

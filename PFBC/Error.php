@@ -1,6 +1,4 @@
 <?php
-namespace PFBC;
-
 abstract class Error extends Base {
 	protected $form;
 
