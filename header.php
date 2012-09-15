@@ -1,63 +1,61 @@
 <?php
-$directory = __DIR__;
-$version = file_get_contents("$directory/version");
-$released = file_get_contents("$directory/released");
+$example = false;
+if(strpos($_SERVER["PHP_SELF"], "/examples") !== false)
+	$example = true;
 
-$isExample = false;
-if(strpos(getcwd(), "/examples") !== false)
-	$isExample = true;
+$documentation = false;
+if(strpos($_SERVER["PHP_SELF"], "/documentation") !== false)
+	$documentation = true;
 
-$stylesheet = "style.css";
-$examplePath = "examples/";	
-$indexPath = "";
-if($isExample) {
-	$stylesheet = "../" . $stylesheet;
-	$examplePath = "";
-	$indexPath = "../index.php";
+$pathprefix = "";
+if($example || $documentation)
+	$pathprefix = "../";
+
+$version = trim(file_get_contents($pathprefix . "version"));
+$release = trim(file_get_contents($pathprefix . "release"));
+
+$pagetitle = "PHP Form Builder Class";
+$bannertitle = "PHP Form Builder Class";
+if($example) {
+	$pagetitle .= " | Examples";
+	$bannertitle = '<a href="../index.php">PHP Form Builder Class</a> / <a href="index.php">Examples</a>';
+}	
+elseif($documentation) {
+	$pagetitle .= " | Documentation";
+	$bannertitle = '<a href="../index.php">PHP Form Builder Class</a> / <a href="index.php">Documentation</a>';
+}	
+if(!empty($title)) {
+	$pagetitle .= " | " . $title;
+	$bannertitle .= " / " . $title;
 }	
 
-echo <<<HTML
+if(!isset($headextra))
+	$headextra = "";
+if($example)
+	$headextra .= '<link href="style.css" rel="stylesheet" type="text/css"/>';
+
+echo <<<STR
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<title>PHP Form Build Class</title>
-		<link href="$stylesheet" rel="stylesheet" type="text/css"/>
+		<title>$pagetitle</title>
+		<link href="{$pathprefix}style.css" rel="stylesheet" type="text/css"/>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/> 
+		$headextra
 	</head>
 	<body>
-		<div id="header">
-            <div id="links">
-                <a href="http://groups.google.com/group/php-form-builder-class/">Mailing List - Google Groups</a>
-                <a href="http://code.google.com/p/php-form-builder-class/">Homepage - Google Code Project Hosting</a>
-                <a href="http://php-form-builder-class.googlecode.com/files/pfbc$version-php5.3.zip">
-				Download Version $version</a>
-            </div>
-            <h2>PHP Form Builder Class</h2>
-            <ul>
-                <li>Version: $version</li>
-                <li>Released: $released</li>
-            </ul>
-            <div style="clear: both;"></div>
-        </div>
+		<div id="pfbc_links">
+			<a href="http://code.google.com/p/php-form-builder-class/">Homepage - Google Code Project Hosting</a> | 
+			<a href="http://groups.google.com/group/php-form-builder-class/">Development Community - Google Groups</a> | 
+			<a href="http://php-form-builder-class.googlecode.com/files/formbuilder-$version.zip">Download Version $version</a>
+		</div>
 
-		<div id="content">
-			<div id="left">
-				<h2 class="first">Table of Contents</h2>
-				<ul>
-					<li><a href="$indexPath#project-overview">Project Overview</a></li>
-					<li><a href="$indexPath#system-requirements">System Requirements</a></li>
-					<li><a href="$indexPath#whats-new-different-in-version-2x">What's New/Different in Version 2.x</a></li>
-					<li><a href="$indexPath#getting-started">Getting Started</a></li>
-					<li><a href="$indexPath#">Examples</a></li>
-					<li class="indent-l1"><a href="{$examplePath}elements.php">Elements</a></li>
-					<li class="indent-l1"><a href="{$examplePath}views.php">Views</a></li>
-					<li class="indent-l1"><a href="{$examplePath}validation.php">Validation</a></li>
-					<li class="indent-l1"><a href="{$examplePath}setting-element-values.php">Setting Element Values</a></li>
-					<li class="indent-l1"><a href="{$examplePath}ajax.php">Ajax</a></li>
-					<li class="indent-l1"><a href="{$examplePath}conditions.php">Conditions</a></li>
-				</ul>
-				<h2>Sponsored By</h2>
-				<a href="http://www.imavex.com/"><img src="http://www.imavex.com/schemes/IMAVEX08/Main/images/header_logo.png" alt="Imavex" title="Imavex" border="0" width="100%"/></a>
-			</div>
-			<div id="right">
-HTML;
+		<div id="pfbc_banner">
+			<h2>$bannertitle</h2>
+			<h5><span>Version: $version</span><span style="padding-left: 10px;">Released: $release</span></h5>
+		</div>
+
+		<div id="pfbc_content">
+
+STR;
