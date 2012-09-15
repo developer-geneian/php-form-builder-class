@@ -1,11 +1,8 @@
 <?php
-namespace PFBC\Element;
-
-class Checkbox extends \PFBC\OptionElement {
+class Element_Checkbox extends OptionElement {
 	protected $attributes = array("type" => "checkbox");
 	protected $inline;
 	protected $maxheight;
-	protected $valign = "top";
 
 	public function jQueryDocumentReady() {
 		if(!empty($this->inline))
@@ -22,10 +19,6 @@ if(checkboxes.outerHeight() > {$this->maxheight}) {
 		"overflow": "auto", 
 		"overflow-x": "hidden" 
 	});
-
-	var scrollTo = jQuery("#{$this->attributes["id"]} .pfbc-checkboxes input:checked:first")[0];
-	if(scrollTo)
-		scrollTo.scrollIntoView(true);
 }	
 JS;
 		}	
@@ -46,10 +39,10 @@ JS;
 		echo '<div id="', $this->attributes["id"], '"><div class="pfbc-checkboxes">';
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
-			echo '<div class="pfbc-checkbox"><table cellpadding="0" cellspacing="0"><tr><td valign="', $this->valign, '"><input id="', $this->attributes["id"], "-", $count, '"', $this->getAttributes(array("id", "value", "checked")), ' value="', $this->filter($value), '"';
+			echo '<div class="pfbc-checkbox"><table cellpadding="0" cellspacing="0"><tr><td valign="top"><input id="', $this->attributes["id"], "-", $count, '"', $this->getAttributes(array("id", "value", "checked")), ' value="', $this->filter($value), '"';
 			if(in_array($value, $this->attributes["value"]))
 				echo ' checked="checked"';
-			echo '/></td><td valign="', $this->valign, '"><label for="', $this->attributes["id"], "-", $count, '">', $text, '</label></td></tr></table></div>';
+			echo '/></td><td><label for="', $this->attributes["id"], "-", $count, '">', $text, '</label></td></tr></table></div>';
 			++$count;
 		}	
 		echo '</div>';

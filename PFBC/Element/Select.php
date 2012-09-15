@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Select extends \PFBC\OptionElement {
+class Element_Select extends OptionElement {
 	protected $attributes = array("class" => "pfbc-select");
 
 	public function render() { 
@@ -16,14 +14,12 @@ class Select extends \PFBC\OptionElement {
 			$this->attributes["name"] .= "[]";
 
 		echo '<select', $this->getAttributes(array("value", "selected")), '>';
-		$selected = false;
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
 			echo '<option value="', $this->filter($value), '"';
-			if(!$selected && in_array($value, $this->attributes["value"])) {
+			$selected = false;
+			if(in_array($value, $this->attributes["value"]))
 				echo ' selected="selected"';
-				$selected = true;
-			}	
 			echo '>', $text, '</option>';
 		}	
 		echo '</select>';

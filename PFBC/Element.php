@@ -1,11 +1,9 @@
 <?php
-namespace PFBC;
-
 abstract class Element extends Base {
-	protected $_errors = array();
-	protected $_form;
+	private $errors = array();
 
 	protected $attributes;
+	protected $form;
 	protected $label;
 	protected $description;
 	protected $validation = array();
@@ -42,7 +40,7 @@ abstract class Element extends Base {
 	}
 
 	public function getErrors() {
-		return $this->_errors;
+		return $this->errors;
 	}	
 
 	public function getID() {
@@ -83,7 +81,7 @@ abstract class Element extends Base {
 	public function isRequired() {
 		if(!empty($this->validation)) {
 			foreach($this->validation as $validation) {
-				if($validation instanceof Validation\Required)
+				if($validation instanceof Validation_Required)
 					return true;
 			}
 		}
@@ -107,7 +105,7 @@ abstract class Element extends Base {
 				if(!$validation->isValid($value)) {
 					/*In the error message, %element% will be replaced by the element's label (or 
 					name if label is not provided).*/
-					$this->_errors[] = str_replace("%element%", $element, $validation->getMessage());
+					$this->errors[] = str_replace("%element%", $element, $validation->getMessage());
 					$valid = false;
 				}	
 			}
@@ -161,8 +159,8 @@ abstract class Element extends Base {
 			$this->attributes["class"] = $class;
 	}
 
-	public function _setForm(Form $form) {
-		$this->_form = $form;
+	public function setForm(Form $form) {
+		$this->form = $form;
 	}
 
 	public function setID($id) {
@@ -184,7 +182,7 @@ abstract class Element extends Base {
 	/*This method provides a shortcut for applying the Required validation class to an element.*/
 	public function setRequired($required) {
 		if(!empty($required))
-			$this->validation[] = new Validation\Required;
+			$this->validation[] = new Validation_Required;
 	}
 
 	/*This method applies one or more validation rules to an element.  If can accept a single concrete 

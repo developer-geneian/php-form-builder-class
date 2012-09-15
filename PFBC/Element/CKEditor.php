@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class CKEditor extends Textarea {
+class Element_CKEditor extends Element_Textarea {
 	protected $basic;
 
 	function renderJS() {
@@ -10,8 +8,8 @@ class CKEditor extends Textarea {
 			echo ', { toolbar: "Basic" }';
 		echo ');';
 
-		$ajax = $this->_form->getAjax();
-		$id = $this->_form->getID();
+		$ajax = $this->form->getAjax();
+		$id = $this->form->getID();
 		if(!empty($ajax)) {
 			echo <<<JS
 	jQuery("#$id").bind("submit", function() {
@@ -23,7 +21,7 @@ JS;
 
 	function getJSFiles() {
 		return array(
-			$this->_form->getResourcesPath() . "/ckeditor/ckeditor.js"
+			$this->form->getResourcesPath() . "/ckeditor/ckeditor.js"
 		);
 	}
 }	

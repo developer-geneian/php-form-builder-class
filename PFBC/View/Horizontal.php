@@ -1,28 +1,26 @@
 <?php
-namespace PFBC\View;
-
-class Horizontal extends \PFBC\View {
+class View_Horizontal extends View {
 	protected $labelPaddingTop;
 
 	public function jQueryDocumentReady() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 		echo 'jQuery("#', $id, ' .pfbc-element:last").css("margin-right", "0");';
 	}
 
 	public function render() {
-		echo '<form', $this->_form->getAttributes(), '>';
-		$this->_form->getError()->render();
+		echo '<form', $this->form->getAttributes(), '>';
+		$this->form->getError()->render();
 
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$elementSize = sizeof($elements);
 		for($e = 0; $e < $elementSize; ++$e) {
 			$element = $elements[$e];
 
-			if($element instanceof \PFBC\Element\Hidden || $element instanceof \PFBC\Element\HTMLExternal)
+			if($element instanceof Element_Hidden || $element instanceof Element_HTMLExternal)
                 $element->render();
 			else {	
 				echo '<div class="pfbc-element">', $element->getPreHTML();
-				if(!$element instanceof \PFBC\Element\Button)
+				if(!$element instanceof Element_Button)
 					$this->renderLabel($element);
 				$element->render();
 				echo $element->getPostHTML(), '</div>';
@@ -33,7 +31,7 @@ class Horizontal extends \PFBC\View {
     }
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 
 		parent::renderCSS();
 		echo <<<CSS
@@ -42,7 +40,7 @@ class Horizontal extends \PFBC\View {
 #$id .pfbc-label { float: left; margin-right: .25em; }
 CSS;
 
-		if(empty($this->labelPaddingTop) && !in_array("style", $this->_form->getPrevent()))
+		if(empty($this->labelPaddingTop) && !in_array("style", $this->form->getPrevent()))
 			$this->labelPaddingTop = ".75em";
 
 		if(!empty($this->labelPaddingTop)) {

@@ -21,7 +21,7 @@ into a code base that is more efficient, easier to manage, and extensible.</p>
 
 <h2><a name="system-requirements">System Requirements</a></h2>
 <ul>
-	<li>PHP 5.3+</li>
+	<li>PHP 5</li>
 </ul>
 
 <h2><a name="whats-new-different-in-version-2x">What's New/Different in Version 2.x</a></h2>
@@ -62,11 +62,6 @@ include($_SERVER["DOCUMENT_ROOT"] . "/PFBC/Form.php");
 
 	</li>
 
-	<li>Namespaces - Version 2.x uses namespaces to prevent naming collisions and organize the project's pieces into a logical 
-	structure.  They are also used for autoloading required class files at runtime.  Namespaces were introduced in PHP 5.3, 
-	so PFBC 2.x won't work if you're using a previous version of PHP.  See <a href="http://php.net/manual/en/language.namespaces.php">
-	http://php.net/manual/en/language.namespaces.php</a> for more information on using namespaces in PHP.</li>
-
 	<li>Form Constructor - The form's contructor now includes an optional second parameter for specifying the form's width.
 
 		<?php
@@ -74,7 +69,7 @@ include($_SERVER["DOCUMENT_ROOT"] . "/PFBC/Form.php");
 //Version 1.x
 $form = new form("Version1x");
 //Version 2.x
-$form = new PFBC\Form("Version2x", 300);
+$form = new Form("Version2x", 300);
 ?>', true), '</pre>';
 		?>
 
@@ -106,7 +101,7 @@ $form->configure(array(
 //Version 1.x
 $form->addTextbox("My Textbox:", "MyTextbox");
 //Version 2.x
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox"));
+$form->addElement(new Element_Textbox("My Textbox:", "MyTextbox"));
 ?>', true), '</pre>';
 		?>
 
@@ -122,12 +117,12 @@ $form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox"));
 //Version 1.x
 $form->addTextbox("My Textbox:", "MyTextbox", "My Textbox\'s Value");
 //Version 2.x
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyRequiredTextbox", array("required" => 1)));
+$form->addElement(new Element_Textbox("My Textbox:", "MyRequiredTextbox", array("required" => 1)));
 $form->setValues(array( 
 	"MyTextbox" => "My Textbox\'s Value"
 ));
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox"));
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox", array(
+$form->addElement(new Element_Textbox("My Textbox:", "MyTextbox"));
+$form->addElement(new Element_Textbox("My Textbox:", "MyTextbox", array(
 	"value" => "My Textbox\'s Value"
 )));
 ?>', true), '</pre>';
@@ -144,7 +139,7 @@ $form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox", array(
 $form = new form("PHPValidation");
 if($form->validate()) {}
 //Version 2.x
-if(PFBC\Form::isValid("PHPValidation")) {}
+if(Form::isValid("PHPValidation")) {}
 ?>', true), '</pre>';
 		?>
 
@@ -160,8 +155,8 @@ $form = new form("Ajax");
 if(!$form->validate())
 	$form->renderAjaxErrorResponse();
 //Version 2.x
-if(!PFBC\Form::isValid("Ajax"))
-	PFBC\Form::renderAjaxErrorResponse("Ajax");
+if(!Form::isValid("Ajax"))
+	Form::renderAjaxErrorResponse("Ajax");
 ?>', true), '</pre>';
 		?>
 
@@ -180,7 +175,7 @@ $form->setAttributes(array(
 ));
 //Version 2.x
 $form->configure(array(
-	"view" => new PFBC\View\Grid(array(1, 2, 3))
+	"view" => new View_Grid(array(1, 2, 3))
 ));
 
 //Version 1.x
@@ -190,7 +185,7 @@ $form->setAttributes(array(
 ));
 //Version 2.x
 $form->configure(array(
-	"view" => new PFBC\View\SideBySide(100, array(
+	"view" => new View_SideBySide(100, array(
 		"labelRightAlign" => 1
 	))	
 ));
@@ -209,8 +204,8 @@ $form->configure(array(
 $form->openFieldset("My Fieldset");
 $form->closeFieldset();
 //Version 2.x
-$form->addElement(PFBC\Element\HTMLExternal(\'<fieldset><legend>My Fieldset</legend>\'));
-$form->addElement(PFBC\Element\HTMLExternal(\'</fieldset>\'));
+$form->addElement(Element_HTMLExternal(\'<fieldset><legend>My Fieldset</legend>\'));
+$form->addElement(Element_HTMLExternal(\'</fieldset>\'));
 ?>', true), '</pre>';
 		?>
 
@@ -226,7 +221,7 @@ $form->addElement(PFBC\Element\HTMLExternal(\'</fieldset>\'));
 
 		<?php
 		echo '<pre>', highlight_string('<?php
-$form->addElement(PFBC\Element\Textbox("My Textbox:", "MyTextbox", array(
+$form->addElement(Element_Textbox("My Textbox:", "MyTextbox", array(
 	"description" => "This is my textbox\'s description."
 )));
 ?>', true), '</pre>';
@@ -239,8 +234,8 @@ $form->addElement(PFBC\Element\Textbox("My Textbox:", "MyTextbox", array(
 
 		<?php
 		echo '<pre>', highlight_string('<?php
-$form->addElement(PFBC\Element\Textbox("My Textbox:", "MyTextbox", array(
-	"validation" => new PFBC\Validation\RegExp("/php|form|builder|class/", "This textbox must contain one of the following words - php, form, builder, and/or class.")
+$form->addElement(Element_Textbox("My Textbox:", "MyTextbox", array(
+	"validation" => new Validation_RegExp("/php|form|builder|class/", "This textbox must contain one of the following words - php, form, builder, and/or class.")
 )));
 ?>', true), '</pre>';
 		?>
@@ -282,9 +277,9 @@ creating your first form.  Take a look at the PHP code snippet provided below.</
 	echo '<pre>', highlight_string('<?php
 session_start();
 include($_SERVER["DOCUMENT_ROOT"] . "/PFBC/Form.php");
-$form = new PFBC\Form("GettingStarted", 300);
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox"));
-$form->addElement(new PFBC\Element\Button);
+$form = new Form("GettingStarted", 300);
+$form->addElement(new Element_Textbox("My Textbox:", "MyTextbox"));
+$form->addElement(new Element_Button);
 $form->render();
 ?>', true), '</pre>';
 	?>
@@ -316,7 +311,7 @@ eliminates any unused php source code from being included.</p>
 
 	<?php
 	echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("GettingStarted", 300);
+$form = new Form("GettingStarted", 300);
 ?>', true), '</pre>';
 	?>
 
@@ -328,7 +323,7 @@ used to set the form's width.</p>
 
 	<?php
 	echo '<pre>', highlight_string('<?php
-$form->addElement(new PFBC\Element\Textbox("My Textbox:", "MyTextbox"));
+$form->addElement(new Element_Textbox("My Textbox:", "MyTextbox"));
 ?>', true), '</pre>';
 	?>
 
@@ -337,7 +332,7 @@ of the concrete classes that extend the abstract Element class - Textbox in this
 
 	<?php
 	echo '<pre>', highlight_string('<?php
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_Button);
 ?>', true), '</pre>';
 	?>
 

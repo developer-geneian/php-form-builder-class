@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Textarea extends \PFBC\Element {
+class Element_Textarea extends Element {
 	protected $attributes = array("class" => "pfbc-textarea", "rows" => "5");
 
 	public function jQueryDocumentReady() {

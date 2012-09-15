@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Sort extends \PFBC\OptionElement {
+class Element_Sort extends OptionElement {
 	protected $jQueryOptions;
 
 	public function jQueryDocumentReady() {
@@ -10,27 +8,15 @@ class Sort extends \PFBC\OptionElement {
 	}
 
 	public function render() { 
-		if(!isset($this->attributes["value"]) || !is_array($this->attributes["value"]))
-			$this->attributes["value"] = array();
-
 		if(substr($this->attributes["name"], -2) != "[]")
 			$this->attributes["name"] .= "[]";
-		
-		$count = 0;
-		$items = array();
+
+		echo '<div id="', $this->attributes["id"], '"><ul>';
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
-
-			$index = array_search($value, $this->attributes["value"]);
-			if($index === false)
-				$index = $count;
-			$items[$index] = '<li class="ui-state-default"><input type="hidden" name="' . $this->attributes["name"] . '" value="' . $value . '"/>' . $text . '</li>';
-
-			++$count;
+			echo '<li class="ui-state-default"><input type="hidden" name="', $this->attributes["name"], '" value="', $value, '"/>', $text, '</li>';
 		}	
-
-		ksort($items);
-		echo '<div id="', $this->attributes["id"], '"><ul>', implode("", $items), '</ul></div>';
+		echo "</ul></div>";
 	}
 
 	public function renderCSS() {

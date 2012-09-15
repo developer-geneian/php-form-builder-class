@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\View;
-
-class SideBySide extends \PFBC\View {
+class View_SideBySide extends View {
 	protected $labelWidth;
 	protected $labelRightAlign;
 	protected $labelPaddingRight = 5;
@@ -17,39 +15,31 @@ class SideBySide extends \PFBC\View {
 	}
 
 	public function render() {
-		echo '<form', $this->_form->getAttributes(), '>';
-		$this->_form->getError()->render();
+		echo '<form', $this->form->getAttributes(), '>';
+		$this->form->getError()->render();
 
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$elementSize = sizeof($elements);
 		$elementCount = 0;
 		for($e = 0; $e < $elementSize; ++$e) {
 			$element = $elements[$e];
 
-			if($element instanceof \PFBC\Element\Hidden || $element instanceof \PFBC\Element\HTMLExternal)
+			if($element instanceof Element_Hidden || $element instanceof Element_HTMLExternal)
                 $element->render();
-            elseif($element instanceof \PFBC\Element\Button) {
-                if($e == 0 || !$elements[($e - 1)] instanceof \PFBC\Element\Button)
+            elseif($element instanceof Element_Button) {
+                if($e == 0 || !$elements[($e - 1)] instanceof Element_Button)
                     echo '<div class="pfbc-element pfbc-buttons">';
                 $element->render();
-                if(($e + 1) == $elementSize || !$elements[($e + 1)] instanceof \PFBC\Element\Button)
+                if(($e + 1) == $elementSize || !$elements[($e + 1)] instanceof Element_Button)
                     echo '</div>';
             }
             else {
 				echo '<div id="pfbc-element-', $elementCount, '" class="pfbc-element">', $element->getPreHTML();
-                $this->renderLabel($element);
-                if(!$element instanceof \PFBC\Element\HTML)
-                    echo '<div class="pfbc-right">';
-                $element->render();
-                if(!$element instanceof \PFBC\Element\HTML)
-                    echo '</div><div style="clear: both;"></div>';
-				
-				$description = $element->getDescription();
-				if(!empty($description))
-					echo '<em class="pfbc-description">', $description, '</em>';
-
-                echo $element->getPostHTML(), '</div>';
-                ++$elementCount;
+				$this->renderLabel($element);
+				echo '<div class="pfbc-right">';
+				$element->render();
+				echo '</div><div style="clear: both;"></div>', $element->getPostHTML(), '</div>';
+				++$elementCount;
 			}
 		}
 
@@ -57,21 +47,20 @@ class SideBySide extends \PFBC\View {
     }
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
-		$width = $this->_form->getWidth();
-		$widthSuffix = $this->_form->getWidthSuffix();
+		$id = $this->form->getId();
+		$width = $this->form->getWidth();
+		$widthSuffix = $this->form->getWidthSuffix();
 
 		if($widthSuffix == "px")
 			$elementWidth = $width - $this->labelWidth - $this->labelPaddingRight;
 		else	
 			$elementWidth = 100 - $this->labelWidth - $this->labelPaddingRight;
 		
-		\PFBC\View::renderCSS();
+		View::renderCSS();
 		echo <<<CSS
 #$id { width: $width{$widthSuffix}; }
 #$id .pfbc-element { margin-bottom: 1em; padding-bottom: 1em; border-bottom: 1px solid #f4f4f4; }
 #$id .pfbc-label { width: {$this->labelWidth}$widthSuffix; float: left; padding-right: {$this->labelPaddingRight}$widthSuffix; }
-#$id .pfbc-description { font-size: .9em; color: #888; }
 #$id .pfbc-buttons { text-align: right; }
 #$id .pfbc-textbox, #$id .pfbc-textarea, #$id .pfbc-select, #$id .pfbc-right { width: $elementWidth{$widthSuffix}; }
 #$id .pfbc-right { float: right; }
@@ -80,7 +69,7 @@ CSS;
 		if(!empty($this->labelRightAlign))
 			echo '#', $id, ' .pfbc-label { text-align: right; }';
 		
-		if(empty($this->labelPaddingTop) && !in_array("style", $this->_form->getPrevent()))
+		if(empty($this->labelPaddingTop) && !in_array("style", $this->form->getPrevent()))
 			$this->labelPaddingTop = ".75em";
 
 		if(!empty($this->labelPaddingTop)) {
@@ -89,13 +78,13 @@ CSS;
 			echo '#', $id, ' .pfbc-label { padding-top: ', $this->labelPaddingTop, '; }';
 		}
 
-		$elements = $this->_form->getElements();
+		$elements = $this->form->getElements();
 		$elementSize = sizeof($elements);
 		$elementCount = 0;
 		for($e = 0; $e < $elementSize; ++$e) {
 			$element = $elements[$e];
 			$elementWidth = $element->getWidth();
-			if(!$element instanceof \PFBC\Element\Hidden && !$element instanceof \PFBC\Element\HTMLExternal && !$element instanceof \PFBC\Element\HTMLExternal) {
+			if(!$element instanceof Element_Hidden && !$element instanceof Element_HTMLExternal && !$element instanceof Element_HTMLExternal) {
 				if(!empty($elementWidth)) {
 					echo '#', $id, ' #pfbc-element-', $elementCount, ' { width: ', $elementWidth, $widthSuffix, '; }';
 					if($widthSuffix == "px") {
@@ -107,19 +96,4 @@ CSS;
 			}	
 		}
 	}
-
-	protected function renderLabel($element) {
-        $label = $element->getLabel();
-        $id = $element->getID();
-        if(!empty($label) || !empty($description)) {
-            echo '<div class="pfbc-label">';
-            if(!empty($label)) {
-                echo '<label for="', $id, '">';
-                if($element->isRequired())
-                    echo '<strong>*</strong> ';
-                echo $label, '</label>'; 
-            }
-            echo '</div>';
-        }
-    }
 }

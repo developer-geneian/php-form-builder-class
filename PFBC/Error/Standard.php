@@ -1,9 +1,7 @@
 <?php
-namespace PFBC\Error;
-
-class Standard extends \PFBC\Error {
+class Error_Standard extends Error {
 	public function applyAjaxErrorResponse() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 		echo <<<JS
 var errorSize = response.errors.length;
 if(errorSize == 1)
@@ -32,7 +30,7 @@ JS;
 	}
 
     public function render() {
-        $errors = $this->parse($this->_form->getErrors());
+        $errors = $this->parse($this->form->getErrors());
         if(!empty($errors)) {
             $size = sizeof($errors);
             if($size == 1)
@@ -45,7 +43,7 @@ JS;
     }
 
     public function renderAjaxErrorResponse() {
-        $errors = $this->parse($this->_form->getErrors());
+        $errors = $this->parse($this->form->getErrors());
         if(!empty($errors)) {
             header("Content-type: application/json");
             echo json_encode(array("errors" => $errors));

@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Date extends Textbox {
+class Element_Date extends Element_Textbox {
 	protected $jQueryOptions;
 	
 	public function jQueryDocumentReady() {
@@ -10,7 +8,7 @@ class Date extends Textbox {
 	}
 
 	public function render() {
-		$this->validation[] = new \PFBC\Validation\Date;
+		$this->validation[] = new Validation_Date;
 		parent::render();
 	}
 }

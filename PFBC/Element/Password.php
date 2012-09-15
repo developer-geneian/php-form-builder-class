@@ -1,6 +1,4 @@
 <?php
-namespace PFBC\Element;
-
-class Password extends Textbox {
+class Element_Password extends Element_Textbox {
 	protected $attributes = array("type" => "password", "class" => "pfbc-textbox");
 }

@@ -1,7 +1,5 @@
 <?php
-namespace PFBC\Element;
-
-class Button extends \PFBC\Element {
+class Element_Button extends Element {
 	protected $attributes = array("type" => "submit", "value" => "Submit");
 	protected $icon;
 
@@ -21,7 +19,7 @@ class Button extends \PFBC\Element {
 	public function jQueryDocumentReady() {
 		/*Unless explicitly prevented, jQueryUI's button widget functionality is applied to 
 		the each Button element.*/
-		if(!in_array("jQueryUIButtons", $this->_form->getPrevent())) {
+		if(!in_array("jQueryUIButtons", $this->form->getPrevent())) {
 			echo 'jQuery("#', $this->attributes["id"], '").button(';
 			/*Any of the jQueryUI framework icons can be added to your buttons via the icon 
 			property.  See http://jqueryui.com/themeroller/ for a complete list of available

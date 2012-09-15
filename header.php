@@ -1,5 +1,5 @@
 <?php
-$directory = __DIR__;
+$directory = dirname(__FILE__);
 $version = file_get_contents("$directory/version");
 $released = file_get_contents("$directory/released");
 
@@ -23,13 +23,14 @@ echo <<<HTML
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>PHP Form Build Class</title>
 		<link href="$stylesheet" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript">var switchTo5x=true;</script><script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><script type="text/javascript">stLight.options({publisher:'ede2d672-d545-4685-8978-6b080bc4769f'});</script>
 	</head>
 	<body>
 		<div id="header">
             <div id="links">
                 <a href="http://groups.google.com/group/php-form-builder-class/">Mailing List - Google Groups</a>
                 <a href="http://code.google.com/p/php-form-builder-class/">Homepage - Google Code Project Hosting</a>
-                <a href="http://php-form-builder-class.googlecode.com/files/pfbc$version-php5.3.zip">
+                <a href="http://php-form-builder-class.googlecode.com/files/pfbc$version-php5.zip">
 				Download Version $version</a>
             </div>
             <h2>PHP Form Builder Class</h2>
@@ -38,6 +39,9 @@ echo <<<HTML
                 <li>Released: $released</li>
             </ul>
             <div style="clear: both;"></div>
+			<div id="sharethis">
+				<span  class='st_facebook_large' ></span><span  class='st_twitter_large' ></span><span  class='st_gbuzz_large' ></span><span  class='st_slashdot_large' ></span><span  class='st_linkedin_large' ></span><span  class='st_email_large' ></span><span  class='st_sharethis_large' ></span>
+			</div>
         </div>
 
 		<div id="content">

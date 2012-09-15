@@ -1,8 +1,6 @@
 <?php
-namespace PFBC;
-
 abstract class Error extends Base {
-	protected $_form;
+	protected $form;
 
 	public function __construct(array $properties = null) {
 		$this->configure($properties);
@@ -11,14 +9,14 @@ abstract class Error extends Base {
 	public abstract function applyAjaxErrorResponse();
 
 	public function clear() {
-		echo 'jQuery("#', $this->_form->getId(), ' .pfbc-error").remove();';
+		echo 'jQuery("#', $this->form->getId(), ' .pfbc-error").remove();';
 	}
 
 	public abstract function render();
 	public abstract function renderAjaxErrorResponse();
 
 	public function renderCSS() {
-		$id = $this->_form->getId();
+		$id = $this->form->getId();
 		echo <<<CSS
 #$id .pfbc-error { padding: .5em; margin-bottom: 1em; }
 #$id .pfbc-error ul { padding-left: 1.75em; margin: 0; margin-top: .25em; }
@@ -26,7 +24,7 @@ abstract class Error extends Base {
 CSS;
 	}
 
-	public function _setForm(Form $form) {
-		$this->_form = $form;
+	public function setForm(Form $form) {
+		$this->form = $form;
 	}
 }

@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 include("../PFBC/Form.php");
 
 if(isset($_POST["form"])) {
-	if(PFBC\Form::isValid($_POST["form"])) {
+	if(Form::isValid($_POST["form"])) {
 		/*The form's submitted data has been validated.  Your script can now proceed with any 
 		further processing required.*/
 		header("Location: " . $_SERVER["PHP_SELF"]);
@@ -30,46 +30,46 @@ property we're setting.</p>
 
 <?php
 $options = array("Option #1", "Option #2", "Option #3");
-$form = new PFBC\Form("setting-element-values", 400);
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
-$form->addElement(new PFBC\Element\Textbox("Textbox:", "Textbox", array(
+$form = new Form("setting-element-values", 400);
+$form->addElement(new Element_Hidden("form", "elements"));
+$form->addElement(new Element_Textbox("Textbox:", "Textbox", array(
 	"value" => "My Textbox's Value"
 )));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea", array(
+$form->addElement(new Element_Textarea("Textarea:", "Textarea", array(
 	"value" => "My Textarea's Value"
 	)));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options, array(
+$form->addElement(new Element_Select("Select:", "Select", $options, array(
 	"value" => "Option #2"
 )));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options, array(
+$form->addElement(new Element_Radio("Radio:", "Radio", $options, array(
 	"value" => "Option #2"
 )));
-$form->addElement(new PFBC\Element\Checkbox("Checkbox:", "Checkbox", $options, array(
+$form->addElement(new Element_Checkbox("Checkbox:", "Checkbox", $options, array(
 	"value" => array("Option #1", "Option #3")
 )));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_Button);
 $form->render();
 
 echo '<pre>', highlight_string('<?php
 $options = array("Option #1", "Option #2", "Option #3");
-$form = new PFBC\Form("setting-element-values", 400);
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
-$form->addElement(new PFBC\Element\Textbox("Textbox:", "Textbox", array(
+$form = new Form("setting-element-values", 400);
+$form->addElement(new Element_Hidden("form", "elements"));
+$form->addElement(new Element_Textbox("Textbox:", "Textbox", array(
 	"value" => "My Textbox\'s Value"
 )));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea", array(
+$form->addElement(new Element_Textarea("Textarea:", "Textarea", array(
 	"value" => "My Textarea\'s Value"
 	)));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options, array(
+$form->addElement(new Element_Select("Select:", "Select", $options, array(
 	"value" => "Option #2"
 )));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options, array(
+$form->addElement(new Element_Radio("Radio:", "Radio", $options, array(
 	"value" => "Option #1"
 )));
-$form->addElement(new PFBC\Element\Checkbox("Checkbox:", "Checkbox", $options, array(
+$form->addElement(new Element_Checkbox("Checkbox:", "Checkbox", $options, array(
 	"value" => array("Option #1", "Option #3")
 )));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_Button);
 $form->render();
 $form->render();
 ?>', true), '</pre>';
@@ -80,7 +80,7 @@ of multiple elements to be set at the same time through an associative array.
 The keys of this array correspond with your form's element names.</p>
 
 <?php
-$form = new PFBC\Form("setting-element-values2", 400);
+$form = new Form("setting-element-values2", 400);
 $form->configure(array(
 	"prevent" => array("focus", "jQuery", "jQueryUI")
 ));
@@ -91,17 +91,17 @@ $form->setValues(array(
 	"Radio" => "Option #2",
 	"Checkbox" => array("Option #1", "Option #3")
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
-$form->addElement(new PFBC\Element\Textbox("Textbox:", "Textbox"));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea"));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options));
-$form->addElement(new PFBC\Element\Checkbox("Checkbox:", "Checkbox", $options));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_Hidden("form", "elements"));
+$form->addElement(new Element_Textbox("Textbox:", "Textbox"));
+$form->addElement(new Element_Textarea("Textarea:", "Textarea"));
+$form->addElement(new Element_Select("Select:", "Select", $options));
+$form->addElement(new Element_Radio("Radio:", "Radio", $options));
+$form->addElement(new Element_Checkbox("Checkbox:", "Checkbox", $options));
+$form->addElement(new Element_Button);
 $form->render();
 
 echo '<pre>', highlight_string('<?php
-$form = new PFBC\Form("setting-element-values2", 400);
+$form = new Form("setting-element-values2", 400);
 $form->setValues(array(
 	"Textbox" => "My Textbox\'s Value",
 	"Textarea" => "My Textarea\'s Value",
@@ -109,13 +109,13 @@ $form->setValues(array(
 	"Radio" => "Option #2",
 	"Checkbox" => array("Option #1", "Option #3")
 ));
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
-$form->addElement(new PFBC\Element\Textbox("Textbox:", "Textbox"));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea"));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options));
-$form->addElement(new PFBC\Element\Checkbox("Checkbox:", "Checkbox", $options));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_Hidden("form", "elements"));
+$form->addElement(new Element_Textbox("Textbox:", "Textbox"));
+$form->addElement(new Element_Textarea("Textarea:", "Textarea"));
+$form->addElement(new Element_Select("Select:", "Select", $options));
+$form->addElement(new Element_Radio("Radio:", "Radio", $options));
+$form->addElement(new Element_Checkbox("Checkbox:", "Checkbox", $options));
+$form->addElement(new Element_Button);
 $form->render();
 ?>', true), '</pre>';
 

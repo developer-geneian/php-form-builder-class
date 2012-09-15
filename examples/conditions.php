@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 include("../PFBC/Form.php");
 
 if(isset($_POST["form"])) {
-	if(PFBC\Form::isValid($_POST["form"])) {
+	if(Form::isValid($_POST["form"])) {
 		/*The form's submitted data has been validated.  Your script can now proceed with any 
 		further processing required.*/
 		header("Location: " . $_SERVER["PHP_SELF"]);
@@ -27,18 +27,18 @@ This is achieved by using a javascript event along with the HTMLExternal element
 
 <?php
 $options = array("Option #1", "Option #2", "Option #3");
-$form = new PFBC\Form("conditions", 400);
-$form->addElement(new PFBC\Element\Hidden("form", "conditions"));
-$form->addElement(new PFBC\Element\YesNo("Show / Hide Condition:", "Condition", array(
+$form = new Form("conditions", 400);
+$form->addElement(new Element_Hidden("form", "conditions"));
+$form->addElement(new Element_YesNo("Show / Hide Condition:", "Condition", array(
 	"description" => "Click \"Yes\" below to show additional form elements.  Click \"No\" to hide them. ", 
 	"onclick" => "toggleAdditionalElements(this.value);"
 )));
-$form->addElement(new PFBC\Element\HTMLExternal('<div id="AdditionalElements" style="display: none;">'));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea"));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options));
-$form->addElement(new PFBC\Element\HTMLExternal('</div>'));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_HTMLExternal('<div id="AdditionalElements" style="display: none;">'));
+$form->addElement(new Element_Textarea("Textarea:", "Textarea"));
+$form->addElement(new Element_Select("Select:", "Select", $options));
+$form->addElement(new Element_Radio("Radio:", "Radio", $options));
+$form->addElement(new Element_HTMLExternal('</div>'));
+$form->addElement(new Element_Button);
 $form->render();
 ?>
 <script type="text/javascript">
@@ -53,18 +53,18 @@ $form->render();
 
 echo '<pre>', highlight_string('<?php
 $options = array("Option #1", "Option #2", "Option #3");
-$form = new PFBC\Form("elements", 400);
-$form->addElement(new PFBC\Element\Hidden("form", "elements"));
-$form->addElement(new PFBC\Element\YesNo("Show / Hide Condition:", "Condition", array(
+$form = new Form("conditions", 400);
+$form->addElement(new Element_Hidden("form", "conditions"));
+$form->addElement(new Element_YesNo("Show / Hide Condition:", "Condition", array(
 	"description" => "Click \"Yes\" below to show additional form elements.  Click \"No\" to hide them. ", 
 	"onclick" => "toggleAdditionalElements(this.value);"
 )));
-$form->addElement(new PFBC\Element\HTMLExternal(\'<div id="AdditionalElements" style="display: none;">\'));
-$form->addElement(new PFBC\Element\Textarea("Textarea:", "Textarea"));
-$form->addElement(new PFBC\Element\Select("Select:", "Select", $options));
-$form->addElement(new PFBC\Element\Radio("Radio:", "Radio", $options));
-$form->addElement(new PFBC\Element\HTMLExternal(\'</div>\'));
-$form->addElement(new PFBC\Element\Button);
+$form->addElement(new Element_HTMLExternal(\'<div id="AdditionalElements" style="display: none;">\'));
+$form->addElement(new Element_Textarea("Textarea:", "Textarea"));
+$form->addElement(new Element_Select("Select:", "Select", $options));
+$form->addElement(new Element_Radio("Radio:", "Radio", $options));
+$form->addElement(new Element_HTMLExternal(\'</div>\'));
+$form->addElement(new Element_Button);
 $form->render();
 ?>
 <script type="text/javascript">
@@ -78,6 +78,4 @@ $form->render();
 ', true), '</pre>';
 
 include("../footer.php");
-
-echo '<pre>', print_r($_SESSION, true), '</pre>';
 ?>

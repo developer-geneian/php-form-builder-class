@@ -1,11 +1,8 @@
 <?php
-namespace PFBC\Element;
-
-class Checksort extends Sort {
+class Element_Checksort extends Element_Sort {
 	protected $attributes = array("type" => "checkbox");
 	protected $inline;
 	protected $maxheight;
-	protected $valign;
 
 	public function jQueryDocumentReady() {
 		parent::jQueryDocumentReady();	
@@ -23,10 +20,6 @@ if(checkboxes.outerHeight() > {$this->maxheight}) {
 		"overflow": "auto", 
 		"overflow-x": "hidden" 
 	});
-
-	var scrollTo = jQuery("#{$this->attributes["id"]} .pfbc-checkboxes input:checked:first")[0];
-	if(scrollTo)
-		scrollTo.scrollIntoView(true);
 }	
 JS;
 		}	
@@ -44,18 +37,17 @@ JS;
 			$this->attributes["name"] .= "[]";
 		
 		$count = 0;
-		$items = array();
+		$existing = "";
 		echo '<div id="', $this->attributes["id"], '"><div class="pfbc-checkboxes">';
 		foreach($this->options as $value => $text) {
 			$value = $this->getOptionValue($value);
-			echo '<div class="pfbc-checkbox"><table cellpadding="0" cellspacing="0"><tr><td valign="', $this->valign, '"><input id="', $this->attributes["id"], "-", $count, '"', $this->getAttributes(array("id", "value", "checked", "name", "onclick")), ' value="', $this->filter($value), '"';
+			echo '<div class="pfbc-checkbox"><table cellpadding="0" cellspacing="0"><tr><td valign="top"><input id="', $this->attributes["id"], "-", $count, '"', $this->getAttributes(array("id", "value", "checked", "name", "onclick")), ' value="', $this->filter($value), '"';
 			if(in_array($value, $this->attributes["value"]))
 				echo ' checked="checked"';
-			echo ' onclick="updateChecksort(this, \'', str_replace("'", "\'", $this->filter($text)), '\');"/></td><td valign="', $this->valign, '"><label for="', $this->attributes["id"], "-", $count, '">', $text, '</label></td></tr></table></div>';
+			echo ' onclick="updateChecksort(this, \'', $this->filter($text), '\');"/></td><td><label for="', $this->attributes["id"], "-", $count, '">', $text, '</label></td></tr></table></div>';
 
-			$index = array_search($value, $this->attributes["value"]);
-			if($index !== false)
-				$items[$index] = '<li id="' . $this->attributes["id"] . "-sort-" . $count . '" class="ui-state-default"><input type="hidden" name="' . $this->attributes["name"] . '" value="' . $value . '"/>' . $text . '</li>';
+			if(in_array($value, $this->attributes["value"]))
+				$existing .= '<li id="' . $this->attributes["id"] . "-sort-" . $count . '" class="ui-state-default"><input type="hidden" name="' . $this->attributes["name"] . '" value="' . $value . '"/>' . $text . '</li>';
 
 			++$count;
 		}	
@@ -64,8 +56,7 @@ JS;
 		if(!empty($this->inline))
 			echo '<div style="clear: both;"></div>';
 
-		ksort($items);
-		echo '<ul>', implode("", $items), '</ul></div>';
+		echo '<ul>', $existing, '</ul></div>';
 	}
 
 	function renderJS() {
